@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-
 import 'package:saving_app/styles/colors.dart';
-
 import 'package:saving_app/styles/text_style.dart';
 
 class OnBoardingPage extends StatelessWidget {
   const OnBoardingPage({super.key});
-
   static const nameRoute = '/';
 
   @override
@@ -16,8 +13,7 @@ class OnBoardingPage extends StatelessWidget {
         color: kBgColor.withOpacity(0.5),
         child: Column(
           children: [
-            SafeArea(
-                child: Image(
+            SafeArea(child: Image(
               image: AssetImage('assets/images/ob-money.png'),
             )),
             SizedBox(
@@ -31,7 +27,10 @@ class OnBoardingPage extends StatelessWidget {
               ),
               decoration: BoxDecoration(
                   color: kWhite,
-                  borderRadius: BorderRadius.all(Radius.circular(20))),
+                  borderRadius: BorderRadius.all(
+                      Radius.circular(20)
+                  )
+              ),
               child: Column(
                 children: [
                   Text(
@@ -43,7 +42,7 @@ class OnBoardingPage extends StatelessWidget {
                   ),
                   Text(
                     'welcome to Fleet Finance, the easy way to improve your finances'
-                    'and help you control expenses and income',
+                        'and help you control expenses and income',
                     style: kSubtitle1.copyWith(color: kSuvaGray),
                     textAlign: TextAlign.center,
                   ),
@@ -51,9 +50,8 @@ class OnBoardingPage extends StatelessWidget {
                     height: 70,
                   ),
                   TextButton(
-                      onPressed: () {
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, '/main', (route) => false);
+                      onPressed: (){
+                        Navigator.pushNamedAndRemoveUntil(context, '/main', (route) => false);
                       },
                       child: Text(
                         'Get Started',
@@ -66,8 +64,12 @@ class OnBoardingPage extends StatelessWidget {
                             horizontal: 36,
                           ),
                           shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10)))))
+                              borderRadius: BorderRadius.all(
+                                  Radius.circular(10)
+                              )
+                          )
+                      )
+                  )
                 ],
               ),
             )

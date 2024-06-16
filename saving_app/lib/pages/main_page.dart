@@ -8,7 +8,6 @@ import 'package:saving_app/styles/text_style.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({super.key});
-
   static const nameRoute = '/main';
 
   @override
@@ -30,7 +29,6 @@ class _MainPageState extends State<MainPage> {
       _selectedIndex = index;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,7 +38,7 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Widget _customBottomNav() {
+  Widget _customBottomNav(){
     return Container(
       decoration: BoxDecoration(
           color: kWhite,
@@ -52,7 +50,8 @@ class _MainPageState extends State<MainPage> {
               color: kGrey,
               blurRadius: 10,
             )
-          ]),
+          ]
+      ),
       child: ClipRRect(
         borderRadius: BorderRadius.vertical(
           top: Radius.circular(15),
@@ -66,30 +65,15 @@ class _MainPageState extends State<MainPage> {
           selectedItemColor: kBlueRibbon,
           unselectedItemColor: kDarkGray,
           items: [
-            BottomNavigationBarItem(
-                icon: Image.asset(
-                  'assets/icons/home.png',
-                  width: 24,
-                  color: _selectedIndex == 0 ? kBlueRibbon : kDarkGray,
-                ),
+            BottomNavigationBarItem(icon: Image.asset('assets/icons/home.png', width: 24, color: _selectedIndex == 0 ? kBlueRibbon : kDarkGray,),
                 label: 'Home'),
-            BottomNavigationBarItem(
-                icon: Image.asset('assets/icons/portfolio.png',
-                    width: 24,
-                    color: _selectedIndex == 0 ? kBlueRibbon : kDarkGray),
+            BottomNavigationBarItem(icon: Image.asset('assets/icons/portfolio.png', width: 24, color: _selectedIndex == 0 ? kBlueRibbon : kDarkGray),
                 label: 'Portfolio'),
-            BottomNavigationBarItem(
-                icon: Image.asset('assets/icons/support.png',
-                    width: 24,
-                    color: _selectedIndex == 0 ? kBlueRibbon : kDarkGray),
+            BottomNavigationBarItem(icon: Image.asset('assets/icons/support.png', width: 24, color: _selectedIndex == 0 ? kBlueRibbon : kDarkGray),
                 label: 'Support'),
-            BottomNavigationBarItem(
-                icon: Image.asset('assets/icons/profile.png',
-                    width: 24,
-                    color: _selectedIndex == 0 ? kBlueRibbon : kDarkGray),
+            BottomNavigationBarItem(icon: Image.asset('assets/icons/profile.png', width: 24, color: _selectedIndex == 0 ? kBlueRibbon : kDarkGray),
                 label: 'Profile'),
-          ],
-        ),
+          ],),
       ),
     );
   }
