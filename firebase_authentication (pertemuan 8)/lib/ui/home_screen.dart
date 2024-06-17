@@ -49,8 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream:
-        _firestore.collection('tasks').orderBy('timestamp').snapshots(),
+        stream: _firestore.collection('tasks').orderBy('timestamp').snapshots(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const CircularProgressIndicator();
@@ -58,10 +57,13 @@ class _HomeScreenState extends State<HomeScreen> {
           return Padding(
             padding: const EdgeInsets.all(10.0),
             child: ListView(
-              children: snapshot.data!.docs.map((DocumentSnapshot
-              document) {
+              children: snapshot.data!.docs.map((DocumentSnapshot document) {
                 Map<String, dynamic> data =
                 document.data()! as Map<String, dynamic>;
+                final titleEdc =
+                TextEditingController(text: data['title'].toString());
+                final noteEdc =
+                TextEditingController(text: data['note'].toString());
                 return SizedBox(
                   height: 170.0,
                   width: MediaQuery.of(context).size.width,
@@ -84,7 +86,103 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                               GestureDetector(
                                   onTap: () {},
-                                  child: Icon(Icons.more_vert_outlined))
+                                  child: PopupMenuButton<String>(
+                                    onSelected: (value) {
+                                      if (value == 'edit') {
+                                        showModalBottomSheet(
+                                            context: context,
+                                            isScrollControlled: true,
+                                            builder: (context) {
+                                              return Padding(
+                                                padding:
+                                                const EdgeInsets.all(16.0),
+                                                child: Form(
+                                                  key: _formKey,
+                                                  child: Column(
+                                                    mainAxisSize:
+                                                    MainAxisSize.min,
+                                                    children: [
+                                                      TextFormField(
+                                                        controller: titleEdc,
+                                                      ),
+                                                      const SizedBox(
+                                                          height: 10.0),
+                                                      SizedBox(
+                                                          height: 300,
+                                                          child: TextFormField(
+                                                            controller: noteEdc,
+                                                            maxLines: null,
+                                                            // Set this
+                                                            expands: true,
+                                                            // and this
+                                                            keyboardType:
+                                                            TextInputType
+                                                                .multiline,
+                                                          )),
+                                                      Padding(
+                                                          padding: EdgeInsets.only(
+                                                              bottom: MediaQuery
+                                                                  .of(
+                                                                  context)
+                                                                  .viewInsets
+                                                                  .bottom),
+                                                          child: SizedBox(
+                                                              width:
+                                                              MediaQuery.of(
+                                                                  context)
+                                                                  .size
+                                                                  .width,
+                                                              child:
+                                                              ElevatedButton(
+                                                                  onPressed:
+                                                                      () async {
+                                                                    if (_formKey
+                                                                        .currentState!
+                                                                        .validate()) {
+                                                                      try {
+                                                                        await _firestore.collection('tasks').doc(document.id).update({
+                                                                          'title': titleEdc.text,
+                                                                          'note': noteEdc.text,
+                                                                          'timestamp': FieldValue.serverTimestamp(),
+                                                                        });
+                                                                        ScaffoldMessenger.of(context).showSnackBar(
+                                                                          const SnackBar(content: Text('Note berhasil diperbarui')),
+                                                                        );
+                                                                        Navigator.pop(context);
+                                                                      } catch (e) {
+                                                                        ScaffoldMessenger.of(context).showSnackBar(
+                                                                          SnackBar(content: Text('$e')),
+                                                                        );
+                                                                      }
+                                                                    }
+                                                                  },
+                                                                  child: const Text(
+                                                                      'Save'))))
+                                                    ],
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                      } else if (value == 'delete') {
+                                        String documentId = document.id;
+                                        _firestore
+                                            .collection('tasks')
+                                            .doc(documentId)
+                                            .delete();
+                                      }
+                                    },
+                                    itemBuilder: (BuildContext context) => [
+                                      const PopupMenuItem<String>(
+                                        value: 'edit',
+                                        child: Text('Edit'),
+                                      ),
+                                      const PopupMenuItem<String>(
+                                        value: 'delete',
+                                        child: Text('Hapus'),
+                                      ),
+                                    ],
+                                    child: Icon(Icons.more_vert_outlined),
+                                  ))
                             ],
                           ),
                           const SizedBox(height: 10.0),
