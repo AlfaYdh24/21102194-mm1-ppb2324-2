@@ -1,17 +1,19 @@
-import 'package:firebase_authentication/ui/home_screen.dart';
-import 'package:firebase_authentication/ui/phone_auth_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_authentication/bloc/login/login_cubit.dart';
+import 'phone_auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:firebase_authentication/bloc/login/login_cubit.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import '../utils/routes.dart';
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
   @override
   State<LoginScreen> createState() => _LoginScreenState();
 }
+
 class _LoginScreenState extends State<LoginScreen> {
   final emailEdc = TextEditingController();
   final passEdc = TextEditingController();
@@ -50,6 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ));
           }
           if (state is LoginSuccess) {
+            // context.read<AuthCubit>().loggedIn();
             ScaffoldMessenger.of(context)
               ..hideCurrentSnackBar()
               ..showSnackBar(SnackBar(
@@ -163,7 +166,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       backgroundImage: NetworkImage(
                           'https://freepngimg.com/thumb/business/83615-blue-icons-symbol-telephone-computer-logo.png'),
                     ),
-                  ),
+                  )
                 ],
               ),
               SizedBox(
@@ -171,6 +174,7 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
+                // Menengahkan elemen horizontal
                 children: [
                   Text("Belum punya akun ?"),
                   TextButton(

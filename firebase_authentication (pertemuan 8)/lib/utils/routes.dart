@@ -4,7 +4,7 @@ import 'package:firebase_authentication/ui/login.dart';
 import 'package:firebase_authentication/ui/register.dart';
 
 MaterialPageRoute _pageRoute(
-        {required Widget body, required RouteSettings settings}) =>
+    {required Widget body, required RouteSettings settings}) =>
     MaterialPageRoute(builder: (_) => body, settings: settings);
 
 Route? generateRoute(RouteSettings settings) {
